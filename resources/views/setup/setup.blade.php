@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="form-group">
                                         {{ Form::label('DB_DATABASE', 'Database Name') }}
-                                        {{ Form::text('DB_DATABASE', 'db_application', [
+                                        {{ Form::text('DB_DATABASE', null, [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: db_application'
                                         ]) }}
@@ -136,8 +136,7 @@
                                             'placeholder'   =>  'Kosongkan jika tidak memakai password'
                                         ]) }}
                                     </div>
-                                    <br>
-                                    <button type="button" class="btn btn-default btn-block btn-success btn-lg">Install</button>
+                                    <button type="button" class="btn btn-default btn-block btn-success btn-lg" style="margin-top:20px;"><b>Install</b></button>
                                     {!! Form::close() !!}
                                 </div>
                                 <!-- /.box-body -->
