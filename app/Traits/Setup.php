@@ -23,10 +23,18 @@ trait Setup
     /**
      * Create .env file
      */
-    public function createEnv()
+    public function createEnv($setup)
     {
         $env = base_path('.env');
         $env_example = base_path('.env.example');
+
+        $input = $setup->only(['APP_NAME', 'APP_URL', 'DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD', 'APP_ENV']);
+
+        foreach ($input as $key => $value) {
+            print_r($key);
+        }
+
+        exit();
 
         if (!$this->isEnvExist()) {
             copy($env_example, $env);
@@ -54,9 +62,9 @@ trait Setup
     /**
      * Check MySQL connection
      */
-    public function isMysqlConnected($request)
+    public function isMysqlConnected($setup)
     {
-        @mysqli_connect($request['DB_HOST'], $request['DB_USERNAME'], $request['DB_PASSWORD'], $request['DB_DATABASE'], $request['DB_PORT']);
+        @mysqli_connect($setup['DB_HOST'], $setup['DB_USERNAME'], $setup['DB_PASSWORD'], $setup['DB_DATABASE'], $setup['DB_PORT']);
 
         if (mysqli_connect_errno()) {
             return false;
