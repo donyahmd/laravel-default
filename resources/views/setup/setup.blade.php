@@ -77,66 +77,93 @@
                                 </div>
                                 <div class="box-body">
                                     {!! Form::open(['action' => 'SetupController@setup']) !!}
-                                    <div class="form-group">
+                                    <div class="form-group @error('APP_NAME') has-error @enderror">
                                         {{ Form::label('APP_NAME', 'Application Name') }}
                                         {{ Form::text('APP_NAME', null, [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: Utamaweb'
                                         ]) }}
+                                        @error('APP_NAME')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('APP_URL') has-error @enderror">
                                         {{ Form::label('APP_URL', 'Application URL') }}
                                         {{ Form::text('APP_URL', null, [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: http://localhost'
                                         ]) }}
+                                        @error('APP_URL')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_CONNECTION') has-error @enderror">
                                         {{ Form::label('DB_CONNECTION', 'Database Connection') }}
                                         {{ Form::select('DB_CONNECTION', array('mysql' => 'MySQL', 'sqlite' => 'SQLite', 'pgsql' => 'PostgreSQL', 'sqlsrv' => 'SQL Server'), 'mysql', [
                                             'class' =>  'form-control'
                                         ]) }}
+                                        @error('DB_CONNECTION')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_HOST') has-error @enderror">
                                         {{ Form::label('DB_HOST', 'Database Host') }}
                                         {{ Form::text('DB_HOST', '127.0.0.1', [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: 127.0.0.1'
                                         ]) }}
+                                        @error('DB_HOST')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_PORT') has-error @enderror">
                                         {{ Form::label('DB_PORT', 'Database Port') }}
                                         {{ Form::text('DB_PORT', '3306', [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: 3306'
                                         ]) }}
+                                        @error('DB_PORT')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_DATABASE') has-error @enderror">
                                         {{ Form::label('DB_DATABASE', 'Database Name') }}
                                         {{ Form::text('DB_DATABASE', null, [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: db_application'
                                         ]) }}
+                                        @error('DB_DATABASE')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_USERNAME') has-error @enderror">
                                         {{ Form::label('DB_USERNAME', 'Username') }}
                                         {{ Form::text('DB_USERNAME', 'root', [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Ex: root'
                                         ]) }}
+                                        @error('DB_USERNAME')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('DB_PASSWORD') has-error @enderror">
                                         {{ Form::label('DB_PASSWORD', 'Password') }}
                                         {{ Form::password('DB_PASSWORD', [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Kosongkan jika tidak memakai password'
                                         ]) }}
+                                        @error('DB_PASSWORD')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group @error('APP_ENV') has-error @enderror">
                                         {{ Form::label('APP_ENV', 'Application Environment') }}
                                         {{ Form::select('APP_ENV', array('local' => 'Local', 'production' => 'Production',), 'local', [
                                             'class' =>  'form-control'
                                         ]) }}
+                                        @error('APP_ENV')
+                                        <span class="help-block">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <button type="submit" class="btn btn-default btn-block btn-success btn-lg" style="margin-top:20px;"><b>Install</b></button>
                                     {!! Form::close() !!}
