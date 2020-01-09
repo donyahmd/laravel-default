@@ -136,7 +136,7 @@
                                             'placeholder'   =>  'Kosongkan jika tidak memakai password'
                                         ]) }}
                                     </div>
-                                    <button type="button" class="btn btn-default btn-block btn-success btn-lg" style="margin-top:20px;"><b>Install</b></button>
+                                    <button type="submit" class="btn btn-default btn-block btn-success btn-lg" style="margin-top:20px;"><b>Install</b></button>
                                     {!! Form::close() !!}
                                 </div>
                                 <!-- /.box-body -->
