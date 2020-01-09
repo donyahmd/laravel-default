@@ -13,6 +13,12 @@
  * Kuning Darken        = #CCA300
  */
 
+ @media (min-width: 992px) {
+    .content-wrapper>.container {
+        width: 65% !important;
+    }
+  }
+
 .navbar-brand > img {
     height : 35px !important;
     margin-top: -7px !important;
@@ -45,4 +51,14 @@
 
 .box.box-warning {
     border-color: #CCA300 !important;
+}
+
+.btn-success {
+    color: #1E1E1E !important;
+    background-color: #FFCC00 !important;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #CCA300 !important;
 }

@@ -69,20 +69,84 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="callout callout-info">
-                        <p>Pastikan semua library <b>Web Server</b> telah diinstall dan di configurasi dengan baik. Lalu lakukan Setup aplikasi ini.</p>
+                        <p>Pastikan semua library <b>Web Server</b> telah diinstall dan di configurasi dengan baik. Lalu
+                            lakukan Setup aplikasi ini.</p>
                     </div>
-                    <div class="box box-warning">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Configurasi</h3>
-                        </div>
-                        <div class="box-body">
-                            {!! Form::open(['action' => 'SetupController@setConfig']) !!}
 
-                            {!! Form::close() !!}
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Configurasi</h3>
+                                </div>
+                                <div class="box-body">
+                                    {!! Form::open(['action' => 'SetupController@setConfig']) !!}
+                                    <div class="form-group">
+                                        {{ Form::label('APP_NAME', 'Application Name') }}
+                                        {{ Form::text('APP_NAME', null, [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: Utamaweb'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('APP_URL', 'Application URL') }}
+                                        {{ Form::text('APP_URL', null, [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: http://localhost'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_CONNECTION', 'Database Connection') }}
+                                        {{ Form::select('DB_CONNECTION', array('mysql' => 'MySQL', 'sqlite' => 'SQLite', 'pgsql' => 'PostgreSQL', 'sqlsrv' => 'SQL Server'), 'mysql', [
+                                            'class' =>  'form-control'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_HOST', 'Database Host') }}
+                                        {{ Form::text('DB_HOST', '127.0.0.1', [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: 127.0.0.1'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_PORT', 'Database Port') }}
+                                        {{ Form::text('DB_PORT', '3306', [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: 3306'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_DATABASE', 'Database Name') }}
+                                        {{ Form::text('DB_DATABASE', 'db_application', [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: db_application'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_USERNAME', 'Username') }}
+                                        {{ Form::text('DB_USERNAME', 'root', [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Ex: root'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('DB_PASSWORD', 'Password') }}
+                                        {{ Form::password('DB_PASSWORD', [
+                                            'class'         =>  'form-control',
+                                            'placeholder'   =>  'Kosongkan jika tidak memakai password'
+                                        ]) }}
+                                    </div>
+                                    <br>
+                                    <button type="button" class="btn btn-default btn-block btn-success btn-lg">Install</button>
+                                    {!! Form::close() !!}
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /.col -->
                     </div>
-                    <!-- /.box -->
+                    <!-- /.row -->
                 </section>
                 <!-- /.content -->
             </div>
