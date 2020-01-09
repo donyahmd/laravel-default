@@ -50,4 +50,18 @@ trait Setup
 
         return false;
     }
+
+    /**
+     * Check MySQL connection
+     */
+    public function isMysqlConnected($request)
+    {
+        @mysqli_connect($request['DB_HOST'], $request['DB_USERNAME'], $request['DB_PASSWORD'], $request['DB_DATABASE'], $request['DB_PORT']);
+
+        if (mysqli_connect_errno()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\Setup;
-use Illuminate\Http\Request;
+use App\Http\Requests\Setup\SetupRequest;
 
 class SetupController extends Controller
 {
@@ -24,8 +24,12 @@ class SetupController extends Controller
      *
      * @return void
      */
-    public function setConfig()
+    public function setup(SetupRequest $request)
     {
-        return $this->deleteEnv();
+        if ($this->isMysqlConnected($request)) {
+            return true;
+        } else {
+            return redirect()->back()->withErrors(mysqli_connect_error());
+        }
     }
 }
