@@ -1,0 +1,48 @@
+/*!
+ * Setup Utamaweb
+ *
+ *  Author  : Doni Ahmad
+ *  Email   : donyahmd24@gmail.com
+ */
+/*
+ * Color
+ * -------------------------
+ * Hijau Tosca          = #008080
+ * Hijau Tosca Darken   = #006666
+ * Kuning               = #FFCC00
+ * Kuning Darken        = #CCA300
+ */
+
+.navbar-brand > img {
+    height : 35px !important;
+    margin-top: -7px !important;
+}
+
+.content-header {
+    color: #FFFFFF !important;
+}
+
+.content-header>h1>small {
+    color: #FFFFFF !important;
+}
+
+.breadcrumb>li {
+    color: #FFFFFF !important;
+}
+.breadcrumb>li>a {
+    color: #FFFFFF !important;
+}
+
+.content-wrapper {
+    background-color: #008080 !important;
+}
+
+.callout.callout-info {
+    color: #1E1E1E !important;
+    background-color: #FFCC00 !important;
+    border-color: #CCA300 !important;
+}
+
+.box.box-warning {
+    border-color: #CCA300 !important;
+}

@@ -36,7 +36,7 @@
         <!-- =============================================== -->
         @include('layouts.header.header')
         <!-- =============================================== -->
-        @include('layouts.sidebar.sidebar')
+        {{-- @include('layouts.sidebar.sidebar') --}}
         <!-- =============================================== -->
 
         <!-- Content Wrapper. Contains page content -->

@@ -18,7 +18,7 @@ class CheckEnvConfiguration
     public function handle($request, Closure $next)
     {
         if (!$this->isEnvExist()) {
-            abort(404);
+            return redirect()->action('SetupController@viewSetup');
         }
         return $next($request);
     }

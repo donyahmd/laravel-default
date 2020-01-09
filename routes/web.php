@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.layout');
+include_once('setup.php');
+
+Route::middleware(['installed'])->group( function () {
+    Route::get('/', function () {
+        return view('layouts.layout');
+    });
 });
