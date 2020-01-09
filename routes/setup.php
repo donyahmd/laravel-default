@@ -8,5 +8,5 @@
 
 Route::prefix('setup')->group( function () {
     Route::get('', 'SetupController@viewSetup');
-    Route::post('', 'SetupController@setConfig');
+    Route::post('', 'SetupController@setup');
 });

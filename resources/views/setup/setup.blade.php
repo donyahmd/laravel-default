@@ -40,13 +40,9 @@
             <nav class="navbar navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a href="{{ URL::to('/') }}" class="navbar-brand">
+                        <a href="{{ URL::to('/') }}" class="navbar-brand text-center">
                             <img src="{{ asset('assets/image/uw/logo-40px.png') }}" alt="Utamaweb Logo">
                         </a>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse">
-                            <i class="fa fa-bars"></i>
-                        </button>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -80,7 +76,7 @@
                                     <h3 class="box-title">Configurasi</h3>
                                 </div>
                                 <div class="box-body">
-                                    {!! Form::open(['action' => 'SetupController@setConfig']) !!}
+                                    {!! Form::open(['action' => 'SetupController@setup']) !!}
                                     <div class="form-group">
                                         {{ Form::label('APP_NAME', 'Application Name') }}
                                         {{ Form::text('APP_NAME', null, [
@@ -134,6 +130,12 @@
                                         {{ Form::password('DB_PASSWORD', [
                                             'class'         =>  'form-control',
                                             'placeholder'   =>  'Kosongkan jika tidak memakai password'
+                                        ]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('APP_ENV', 'Application Environment') }}
+                                        {{ Form::select('APP_ENV', array('local' => 'Local', 'production' => 'Production',), 'local', [
+                                            'class' =>  'form-control'
                                         ]) }}
                                     </div>
                                     <button type="submit" class="btn btn-default btn-block btn-success btn-lg" style="margin-top:20px;"><b>Install</b></button>

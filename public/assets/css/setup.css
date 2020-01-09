@@ -19,6 +19,12 @@
     }
   }
 
+.navbar-brand {
+    transform: translateX(-50%) !important;
+    left: 50% !important;
+    position: absolute !important;
+}
+
 .navbar-brand > img {
     height : 35px !important;
     margin-top: -7px !important;
