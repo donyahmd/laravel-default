@@ -19,6 +19,12 @@
     }
   }
 
+nav {
+    -webkit-box-shadow: 0px 15px 10px -15px #111;
+	   -moz-box-shadow: 0px 15px 10px -15px #111;
+	        box-shadow: 0px 15px 10px -15px #111;
+}
+
 .navbar-brand {
     transform: translateX(-50%) !important;
     left: 50% !important;
