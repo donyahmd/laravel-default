@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 
 trait Setup
@@ -25,24 +26,45 @@ trait Setup
      */
     public function createEnv($setup)
     {
+        $this->setupConfig();
         $env = base_path('.env');
-        $env_example = base_path('.env.example');
+        $envExample = base_path('.env.example');
 
-        $input = $setup->only(['APP_NAME', 'APP_URL', 'DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD', 'APP_ENV']);
-
-        foreach ($input as $key => $value) {
-            print_r($key);
-        }
-
-        exit();
+        $input = $setup->only([
+            'APP_NAME', 'APP_URL', 'DB_CONNECTION',
+            'DB_HOST', 'DB_PORT', 'DB_DATABASE',
+            'DB_USERNAME', 'DB_PASSWORD', 'APP_ENV']);
 
         if (!$this->isEnvExist()) {
-            copy($env_example, $env);
-            Artisan::call('key:generate');
-            return true;
+            copy($envExample, $env);
+
+            $envLines = file($env);
+            foreach ($input as $index => $value) {
+                foreach ($envLines as $key => $line) {
+                    if (strpos($line, $index) !== false) {
+                        $envLines[$key] = $index . '="' . $value . '"' . PHP_EOL;
+                    }
+                }
+            }
+
+            Artisan::call('key:generate', [
+                '--show'    =>  true,
+            ]);
+
+            $appKey = Artisan::output();
+            $envLines[2] = 'APP_KEY=' . $appKey . '';
+
+            $fp = fopen($env, 'w');
+            fwrite($fp, implode('', $envLines));
+            fclose($fp);
+
+            // $this->runArtisan();
+        } else {
+            $this->deleteEnv();
+            $this->createEnv($setup);
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -53,10 +75,10 @@ trait Setup
         $env = base_path('.env');
 
         if ($this->isEnvExist()) {
-            return $env;
+            unlink($env);
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -71,5 +93,29 @@ trait Setup
         }
 
         return true;
+    }
+
+    /**
+     * Initialize all install functions
+     *
+     */
+    private function setupConfig()
+    {
+        config(['app.debug' => true]);
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+    }
+
+    /**
+     * Run Artisan Command
+     */
+    private function runArtisan()
+    {
+        $this->setupConfig();
+
+        Artisan::call('migrate:fresh', [
+            '--force'   =>  true,
+            '--seed'    =>  true,
+        ]);
     }
 }

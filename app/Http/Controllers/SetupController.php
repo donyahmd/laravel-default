@@ -27,7 +27,9 @@ class SetupController extends Controller
     public function setup(SetupRequest $setup)
     {
         if ($this->isMysqlConnected($setup)) {
-            return $this->createEnv($setup);
+            if ($this->createEnv($setup)) {
+                return redirect('/');
+            }
         } else {
             return redirect()->back()->withErrors(mysqli_connect_error());
         }
