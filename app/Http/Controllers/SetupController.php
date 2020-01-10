@@ -28,10 +28,22 @@ class SetupController extends Controller
     {
         if ($this->isMysqlConnected($setup)) {
             if ($this->createEnv($setup)) {
-                return redirect('/');
+                return redirect()->action('SetupController@runMigrate');
             }
         } else {
             return redirect()->back()->withErrors(mysqli_connect_error());
+        }
+    }
+
+    /**
+     * Save setup configuration
+     *
+     * @return void
+     */
+    public function runMigrate()
+    {
+        if ($this->runArtisan()) {
+            return redirect('/');
         }
     }
 }

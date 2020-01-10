@@ -111,11 +111,18 @@ trait Setup
      */
     private function runArtisan()
     {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '512M');
+
         $this->setupConfig();
+
+        DB::statement('SET default_storage_engine=INNODB;');
 
         Artisan::call('migrate:fresh', [
             '--force'   =>  true,
             '--seed'    =>  true,
         ]);
+
+        return true;
     }
 }
