@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 
 class CrudGenerator extends Command
@@ -43,7 +44,7 @@ class CrudGenerator extends Command
         $this->model($name);
         $this->request($name);
 
-        File::append(base_path('routes/web.php'), 'Route::resource(\'' . str_plural(strtolower($name)) . "', '{$name}Controller');");
+        File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($name)) . "', '{$name}Controller');");
     }
 
     protected function getStub($type)
@@ -72,8 +73,8 @@ class CrudGenerator extends Command
             ],
             [
                 $name,
-                strtolower(str_plural($name)),
-                strtolower($name)
+                Str::lower(Str::plural($name)),
+                Str::lower($name)
             ],
             $this->getStub('Controller')
         );
