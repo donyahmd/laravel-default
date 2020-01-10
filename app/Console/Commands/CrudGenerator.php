@@ -2,17 +2,21 @@
 
 namespace App\Console\Commands;
 
+use File;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use App\Traits\CrudGenerator as AppCrudGenerator;
 
 class CrudGenerator extends Command
 {
+    use AppCrudGenerator;
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:crud {name}';
+    protected $signature = 'make:crud {className}';
 
     /**
      * The console command description.
@@ -38,61 +42,8 @@ class CrudGenerator extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
+        $className = Str::ucfirst($this->argument('className'));
 
-        $this->controller($name);
-        $this->model($name);
-        $this->request($name);
-
-        File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($name)) . "', '{$name}Controller');");
-    }
-
-    protected function getStub($type)
-    {
-        return file_get_contents(resource_path("stubs/$type.stub"));
-    }
-
-    protected function model($name)
-    {
-        $modelTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
-            $this->getStub('Model')
-        );
-
-        file_put_contents(app_path("/Models/{$name}.php"), $modelTemplate);
-    }
-
-    protected function controller($name)
-    {
-        $controllerTemplate = str_replace(
-            [
-                '{{modelName}}',
-                '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
-            ],
-            [
-                $name,
-                Str::lower(Str::plural($name)),
-                Str::lower($name)
-            ],
-            $this->getStub('Controller')
-        );
-
-        file_put_contents(app_path("/Http/Controllers/{$name}Controller.php"), $controllerTemplate);
-    }
-
-    protected function request($name)
-    {
-        $requestTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
-            $this->getStub('Request')
-        );
-
-        if(!file_exists($path = app_path('/Http/Requests')))
-            mkdir($path, 0777, true);
-
-        file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
+        $this->createCrud($className);
     }
 }
