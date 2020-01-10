@@ -68,6 +68,14 @@ trait CrudGenerator
 
     protected function makeRoute($className)
     {
+        //TODO: Append diantara middleware installed
+        // $filename = 'test.php'; // the file to change
+        // $search = 'Hi 2'; // the content after which you want to insert new stuff
+        // $insert = 'Hi 3'; // your new stuff
+
+        // $replace = $search. "\n". $insert;
+
+        // file_put_contents($filename, str_replace($search, $replace, file_get_contents($filename)));
         File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');" . PHP_EOL);
     }
 
