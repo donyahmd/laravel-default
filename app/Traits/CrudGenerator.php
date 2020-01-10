@@ -68,7 +68,7 @@ trait CrudGenerator
 
     protected function makeRoute($className)
     {
-        File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');");
+        File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');" . PHP_EOL);
     }
 
     protected function makeMigration($className)
