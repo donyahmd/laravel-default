@@ -17,12 +17,12 @@ trait CrudGenerator
         $this->makeMigration($className);
     }
 
-    protected function getStub($type)
+    private function getStub($type)
     {
         return file_get_contents(resource_path("stubs/$type.stub"));
     }
 
-    protected function makeController($className)
+    private function makeController($className)
     {
         $controllerTemplate = str_replace(
             [
@@ -41,7 +41,7 @@ trait CrudGenerator
         file_put_contents(app_path("/Http/Controllers/{$className}Controller.php"), $controllerTemplate);
     }
 
-    protected function makeModel($className)
+    private function makeModel($className)
     {
         $modelTemplate = str_replace(
             ['{{modelName}}'],
@@ -52,7 +52,7 @@ trait CrudGenerator
         file_put_contents(app_path("/Models/{$className}.php"), $modelTemplate);
     }
 
-    protected function makeRequest($className)
+    private function makeRequest($className)
     {
         $requestTemplate = str_replace(
             ['{{modelName}}'],
@@ -66,20 +66,26 @@ trait CrudGenerator
         file_put_contents(app_path("/Http/Requests/{$className}Request.php"), $requestTemplate);
     }
 
-    protected function makeRoute($className)
+    private function makeRoute($className)
     {
-        //TODO: Append diantara middleware installed
-        // $filename = 'test.php'; // the file to change
-        // $search = 'Hi 2'; // the content after which you want to insert new stuff
-        // $insert = 'Hi 3'; // your new stuff
+        $routes = base_path('routes/web.php');
+        $data = array_slice(file($routes), 0);
 
-        // $replace = $search. "\n". $insert;
+        foreach ($data as $line) {
+            if (Str::contains($line, "Route::middleware(['installed'])->group( function () {")) {
+                $previousLine = $line;
+            }
+        }
 
-        // file_put_contents($filename, str_replace($search, $replace, file_get_contents($filename)));
-        File::append(base_path('routes/web.php'), 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');" . PHP_EOL);
+        $nextLine = 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');";
+
+        $newLine = $previousLine . "\t" . $nextLine . PHP_EOL;
+        $newRoutes = str_replace(strip_tags($previousLine), strip_tags($newLine), file_get_contents($routes));
+
+        file_put_contents($routes, $newRoutes);
     }
 
-    protected function makeMigration($className)
+    private function makeMigration($className)
     {
         $migrationTableName = Str::plural(Str::lower(Str::snake($className)));
         $migrationTemplate = str_replace(
@@ -103,7 +109,7 @@ trait CrudGenerator
         file_put_contents(base_path("/database/migrations/{$timestamp}_create_{$migrationTableName}_table.php"), $migrationTemplate);
     }
 
-    protected function makeView($className)
+    private function makeView($className)
     {
         //
     }
