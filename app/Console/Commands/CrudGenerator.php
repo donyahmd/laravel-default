@@ -41,8 +41,11 @@ class CrudGenerator extends Command
      */
     public function handle()
     {
-        $className = Str::ucfirst($this->argument('className'));
+        $this->info('Please wait, magic is on process. Abrakadabra!');
 
+        $className = Str::ucfirst($this->argument('className'));
         $this->createCrud($className);
+
+        $this->info('TADAA! Your CRUD is created magically!');
     }
 }
