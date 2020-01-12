@@ -114,7 +114,7 @@ trait CrudGenerator
         file_put_contents(base_path("/database/migrations/{$timestamp}_create_{$migrationTableName}_table.php"), $migrationTemplate);
     }
 
-    private function makeView($className)
+    private function makeIndexView($className)
     {
         //TODO: Bikin auto
     }
