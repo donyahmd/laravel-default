@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use File;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 trait CrudGenerator
