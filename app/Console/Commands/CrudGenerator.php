@@ -22,7 +22,7 @@ class CrudGenerator extends Command
      *
      * @var string
      */
-    protected $description = 'Membuat CRUD Otomatis';
+    protected $description = 'Magic {C}reate,{R}ead,{U}pdate,{D}elete Generator by Doni Ahmad';
 
     /**
      * Create a new command instance.
