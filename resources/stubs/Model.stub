@@ -6,5 +6,39 @@ use Illuminate\Database\Eloquent\Model;
 
 class {{modelName}} extends Model
 {
+    /**
+     * Name of the table.
+     * Generate with [Magic {C}reate,{R}ead,{U}pdate,{D}elete by Doni Ahmad]
+     *
+     * @author Doni Ahmad <donyahmd24@gmail.com>
+     * @return string
+     */
+    protected $table = '{{modelNamePluralLowerCase}}';
+
+    /**
+     * Primary Key of the table.
+     * Generate with [Magic {C}reate,{R}ead,{U}pdate,{D}elete by Doni Ahmad]
+     *
+     * @author Doni Ahmad <donyahmd24@gmail.com>
+     * @return string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * Primary Key is Auto Increment.
+     * Generate with [Magic {C}reate,{R}ead,{U}pdate,{D}elete by Doni Ahmad]
+     *
+     * @author Doni Ahmad <donyahmd24@gmail.com>
+     * @return boolean
+     */
+    protected $incrementing = true;
+
+    /**
+     * Guarded column of the table.
+     * Generate with [Magic {C}reate,{R}ead,{U}pdate,{D}elete by Doni Ahmad]
+     *
+     * @author Doni Ahmad <donyahmd24@gmail.com>
+     * @return array
+     */
     protected $guarded = ['id'];
 }

@@ -43,8 +43,14 @@ trait CrudGenerator
     private function makeModel($className)
     {
         $modelTemplate = str_replace(
-            ['{{modelName}}'],
-            [$className],
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}'
+            ],
+            [
+                $className,
+                Str::lower(Str::plural($className)),
+            ],
             $this->getStub('Model')
         );
 
