@@ -2,10 +2,9 @@
 
 namespace App\Traits;
 
-use Carbon\Carbon;
 use File;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
-
 trait CrudGenerator
 {
     protected function createCrud($className)
@@ -111,6 +110,6 @@ trait CrudGenerator
 
     private function makeView($className)
     {
-        //
+        //TODO: Bikin auto
     }
 }
