@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class {{modelName}} extends Model
+class {modelName} extends Model
 {
     /**
      * Name of the table.
@@ -13,7 +13,7 @@ class {{modelName}} extends Model
      * @author Doni Ahmad <donyahmd24@gmail.com>
      * @return string
      */
-    protected $table = '{{modelNamePluralLowerCase}}';
+    protected $table = '{modelNamePluralLowerCase}';
 
     /**
      * Primary Key of the table.

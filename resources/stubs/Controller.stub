@@ -2,43 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{{modelName}}Request;
-use App\{{modelName}};
+use App\Http\Requests\{modelName}Request;
 
-class {{modelName}}Controller extends Controller
+use App\Models\{modelName};
+
+class {modelName}Controller extends Controller
 {
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
+        ${modelNamePluralLowerCase} = {modelName}::latest()->get();
 
-        return response()->json(${{modelNamePluralLowerCase}});
+        return response()->json(${modelNamePluralLowerCase});
     }
 
-    public function store({{modelName}}Request $request)
+    public function store({modelName}Request $request)
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
+        ${modelNameSingularLowerCase} = {modelName}::create($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 201);
+        return response()->json(${modelNameSingularLowerCase}, 201);
     }
 
     public function show($id)
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+        ${modelNameSingularLowerCase} = {modelName}::findOrFail($id);
 
-        return response()->json(${{modelNameSingularLowerCase}});
+        return response()->json(${modelNameSingularLowerCase});
     }
 
-    public function update({{modelName}}Request $request, $id)
+    public function update({modelName}Request $request, $id)
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
-        ${{modelNameSingularLowerCase}}->update($request->all());
+        ${modelNameSingularLowerCase} = {modelName}::findOrFail($id);
+        ${modelNameSingularLowerCase}->update($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 200);
+        return response()->json(${modelNameSingularLowerCase}, 200);
     }
 
     public function destroy($id)
     {
-        {{modelName}}::destroy($id);
+        {modelName}::destroy($id);
 
         return response()->json(null, 204);
     }

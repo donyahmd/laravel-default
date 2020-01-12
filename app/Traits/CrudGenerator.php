@@ -25,9 +25,9 @@ trait CrudGenerator
     {
         $controllerTemplate = str_replace(
             [
-                '{{modelName}}',
-                '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{modelName}',
+                '{modelNamePluralLowerCase}',
+                '{modelNameSingularLowerCase}'
             ],
             [
                 $className,
@@ -44,8 +44,8 @@ trait CrudGenerator
     {
         $modelTemplate = str_replace(
             [
-                '{{modelName}}',
-                '{{modelNamePluralLowerCase}}'
+                '{modelName}',
+                '{modelNamePluralLowerCase}'
             ],
             [
                 $className,
@@ -60,7 +60,7 @@ trait CrudGenerator
     private function makeRequest($className)
     {
         $requestTemplate = str_replace(
-            ['{{modelName}}'],
+            ['{modelName}'],
             [$className],
             $this->getStub('Request')
         );
@@ -95,9 +95,9 @@ trait CrudGenerator
         $migrationTableName = Str::plural(Str::lower(Str::snake($className)));
         $migrationTemplate = str_replace(
             [
-                '{{modelName}}',
-                '{{modelNamePluralLowerCase}}',
-                '{{modelNamePlural}}'
+                '{modelName}',
+                '{modelNamePluralLowerCase}',
+                '{modelNamePlural}'
             ],
             [
                 $className,
