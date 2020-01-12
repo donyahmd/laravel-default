@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use File;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use App\Traits\CrudGenerator as AppCrudGenerator;
