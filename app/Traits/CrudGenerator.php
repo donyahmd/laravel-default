@@ -119,10 +119,18 @@ trait CrudGenerator
         file_put_contents(base_path("/database/migrations/{$timestamp}_create_{$migrationTableName}_table.php"), $migrationTemplate);
     }
 
+    /**
+     * Create migration table column list.
+     * TODO: Buat limit jika kolom integer, dan tambahkan opsional().
+     *
+     * @param array $explodeField
+     * @return string
+     */
     private function migrationColumnList($explodeField)
     {
         $migrationColumn = null;
         foreach ($explodeField as $value) {
+
             $field  = $value[0];
             $type   = $this->typeDataColumn($value[1]);
 
