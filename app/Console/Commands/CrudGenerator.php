@@ -52,11 +52,10 @@ class CrudGenerator extends Command
 
         $this->info('Please wait, magic is on process. Abrakadabra!');
 
-        if ($this->option('field') == null) {
-            $this->createCrud($className);
-        } else {
+        if ($this->option('field') != null)
             $this->createCrud($className, $explodeField);
-        }
+        else
+            $this->createCrud($className);
 
         $this->info('TADAA! Your CRUD is created magically!');
     }
