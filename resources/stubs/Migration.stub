@@ -15,6 +15,7 @@ class Create{modelNamePlural}Table extends Migration
     {
         Schema::create('{modelNamePluralLowerCase}', function (Blueprint $table) {
             $table->bigIncrements('id');
+{field}
             $table->timestamps();
         });
     }
