@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 trait CrudGenerator
 {
-    protected function createCrud($className)
+    protected function createCrud($className, $parameter = null)
     {
         $this->makeController($className);
         $this->makeModel($className);

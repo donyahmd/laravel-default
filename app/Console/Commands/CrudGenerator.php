@@ -15,7 +15,7 @@ class CrudGenerator extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {className : Name of the Model}';
+    protected $signature = 'make:crud {className : Name of the Model} {--field=}';
 
     /**
      * The console command description.
@@ -41,10 +41,22 @@ class CrudGenerator extends Command
      */
     public function handle()
     {
-        $this->info('Please wait, magic is on process. Abrakadabra!');
+        $parameterConsole = $this->option('field');
+        $explodeParameter = explode(",", $parameterConsole);
+
+        foreach ($explodeParameter as $field) {
+            $explodeField[] = explode(":", $field);
+        }
 
         $className = Str::ucfirst($this->argument('className'));
-        $this->createCrud($className);
+
+        $this->info('Please wait, magic is on process. Abrakadabra!');
+
+        if ($this->option('field') == null) {
+            $this->createCrud($className);
+        } else {
+            $this->createCrud($className, $explodeField);
+        }
 
         $this->info('TADAA! Your CRUD is created magically!');
     }
