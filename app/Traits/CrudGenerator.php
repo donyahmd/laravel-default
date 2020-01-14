@@ -94,7 +94,11 @@ trait CrudGenerator
     {
         $migrationTableName = Str::plural(Str::lower(Str::snake($className)));
 
-        $field = $this->migrationColumnList($explodeField);
+        if ($explodeField != null) {
+            $field = $this->migrationColumnList($explodeField);
+        } else {
+            $field = null;
+        }
 
         $migrationTemplate = str_replace(
             [
