@@ -31,7 +31,7 @@ class {modelName} extends Model
      * @author Doni Ahmad <donyahmd24@gmail.com>
      * @return boolean
      */
-    protected $incrementing = true;
+    public $incrementing = true;
 
     /**
      * Guarded column of the table.
