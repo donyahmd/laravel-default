@@ -82,7 +82,15 @@ trait CrudGenerator
             }
         }
 
-        $nextLine = 'Route::resource(\'' . Str::plural(Str::lower($className)) . "', '{$className}Controller');";
+        $nextLine = "Route::name('" . Str::lower($className) . ".')->prefix('". Str::lower($className) ."')->group( function () {". PHP_EOL .
+            "\t\t" .'Route::get(\'' . "', '{$className}Controller@index')->name('index');" . PHP_EOL .
+            "\t\t" .'Route::get(\'datatables' . "', '{$className}Controller@dataTables')->name('datatables');" . PHP_EOL .
+            "\t\t" .'Route::get(\'create' . "', '{$className}Controller@create')->name('create');" . PHP_EOL .
+            "\t\t" .'Route::get(\'store' . "', '{$className}Controller@store')->name('store');" . PHP_EOL .
+            "\t\t" .'Route::get(\'edit/{id}' . "', '{$className}Controller@edit')->name('edit');" . PHP_EOL .
+            "\t\t" .'Route::get(\'update/{id}' . "', '{$className}Controller@update')->name('update');" . PHP_EOL .
+            "\t\t" .'Route::get(\'delete/{id}' . "', '{$className}Controller@delete')->name('delete');" . PHP_EOL .
+            "\t ". "});";
 
         $newLine = $previousLine . "\t" . $nextLine . PHP_EOL;
         $newRoutes = str_replace(strip_tags($previousLine), strip_tags($newLine), file_get_contents($routes));
