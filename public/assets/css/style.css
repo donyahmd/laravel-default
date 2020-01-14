@@ -1,0 +1,18 @@
+/*!
+ * AdminLTE Custom Style
+ *
+ *  Author  : Doni Ahmad
+ *  Email   : donyahmd24@gmail.com
+ */
+/*
+ * Color
+ * -------------------------
+ * Hijau Tosca          = #008080
+ * Hijau Tosca Darken   = #006666
+ * Kuning               = #FFCC00
+ * Kuning Darken        = #CCA300
+ */
+
+.btn-action {
+    width: 60px !important;
+}
