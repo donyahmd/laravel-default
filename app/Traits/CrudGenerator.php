@@ -21,6 +21,11 @@ trait CrudGenerator
         return file_get_contents(resource_path("stubs/$type.stub"));
     }
 
+    private function getViewStub($type)
+    {
+        return file_get_contents(resource_path("stubs/views/$type.blade.stub"));
+    }
+
     private function makeController($className)
     {
         $controllerTemplate = str_replace(
@@ -186,11 +191,64 @@ trait CrudGenerator
 
     private function makeView($className, $explodeField = null)
     {
+        $modelNamePluralLowerCase = Str::plural(Str::lower(Str::snake($className)));
+        $path = base_path('/resources/views/' . $modelNamePluralLowerCase);
+
+        if(!file_exists($path))
+            mkdir($path, 0777, true);
+
         $this->makeIndexView($className, $explodeField);
     }
 
     private function makeIndexView($className, $explodeField = null)
     {
-        //TODO: Bikin auto
+        $ajaxColumns = null;
+        $dataTableColumns = null;
+
+        if ($explodeField != null) {
+            foreach ($explodeField as $value) {
+                $column  = $value[0];
+                $ajaxColumns .= "\t\t\t{ data: '$column', name: '$column' }," . PHP_EOL ;
+
+                $dataTableColumnName = Str::ucfirst(str_replace("_", " ", $column));
+                $dataTableColumns .= "\t\t\t\t\t\t\t\t<th>$dataTableColumnName</th>" . PHP_EOL ;
+            }
+        } else {
+            $ajaxColumns = "\t\t\t";
+            $dataTableColumns = "\t\t\t\t\t\t\t\t";
+        }
+
+        $ajaxId = "{ data: 'id', name: 'id' }," . PHP_EOL;
+        $ajaxAction = "{ data: 'action', name: 'action' }," . PHP_EOL;
+
+        $dataTableId = "<th>ID</th>" . PHP_EOL;
+        $dataTableAction = "<th>Action</th>" . PHP_EOL;
+
+        $modelNamePluralLowerCase = Str::plural(Str::lower(Str::snake($className)));
+        $modelNameSpacing = preg_replace('/([a-z])([A-Z])/s','$1 $2', $className);
+        $modelNameLowerCase = Str::lower(Str::snake($className));
+
+        $ajaxTableColumns = $ajaxId . $ajaxColumns . $ajaxAction;
+        $dataTableHeader = $dataTableId . $dataTableColumns . $dataTableAction;
+
+        $indexViewTemplate = str_replace(
+            [
+                '{modelName}',
+                '{modelNameSpacing}',
+                '{modelNameLowerCase}',
+                '{ajaxTableColumns}',
+                '{dataTableHeader}'
+            ],
+            [
+                $className,
+                $modelNameSpacing,
+                $modelNameLowerCase,
+                $ajaxTableColumns,
+                $dataTableHeader
+            ],
+            $this->getViewStub('index')
+        );
+
+        file_put_contents(base_path("/resources/views/{$modelNamePluralLowerCase}/index.blade.php"), $indexViewTemplate);
     }
 }

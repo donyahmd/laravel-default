@@ -15,7 +15,7 @@ class CrudGenerator extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {className : Name of the Model} {--field=}';
+    protected $signature = 'make:crud {className : Name of the Model} {--field=} {--view} {--migrate}';
 
     /**
      * The console command description.

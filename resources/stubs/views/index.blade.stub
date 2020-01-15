@@ -1,0 +1,64 @@
+@extends('layouts.layout')
+
+@section('title', '{modelNameSpacing}')
+@section('description', '{modelNameSpacing} Module')
+@section('breadcrumb', '{modelNameSpacing}')
+
+@push('style')
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+@endpush
+
+@push('script')
+<!-- DataTables -->
+<script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(function () {
+        {modelNameLowerCase}_table;
+    });
+
+    var {modelNameLowerCase}_table = $('#{modelNameLowerCase}_table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ action('{modelName}Controller@dataTables') }}",
+        columns: [
+            {ajaxTableColumns}
+        ],
+        "lengthChange": false,
+    });
+</script>
+@endpush
+
+@section('content')
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        {modelNameSpacing} Data
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <a href="{{ action('modelNameController@create') }}" class="btn btn-app">
+                        <i class="fa fa-plus"></i> Add {modelNameSpacing}
+                    </a>
+                    <table id="{modelNameLowerCase}_table" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                {dataTableHeader}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
