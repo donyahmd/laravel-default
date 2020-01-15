@@ -87,7 +87,7 @@ trait CrudGenerator
             }
         }
 
-        $nextLine = "Route::name('" . Str::lower($className) . ".')->prefix('". Str::lower($className) ."')->group( function () {". PHP_EOL .
+        $nextLine = "Route::name('" . Str::lower(Str::snake($className)) . ".')->prefix('". Str::lower(Str::snake($className)) ."')->group( function () {". PHP_EOL .
             "\t\t" .'Route::get(\'' . "', '{$className}Controller@index')->name('index');" . PHP_EOL .
             "\t\t" .'Route::get(\'datatables' . "', '{$className}Controller@dataTables')->name('datatables');" . PHP_EOL .
             "\t\t" .'Route::get(\'create' . "', '{$className}Controller@create')->name('create');" . PHP_EOL .
