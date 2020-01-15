@@ -20,7 +20,7 @@ class CrudGenerator extends Command
     protected $signature = 'make:crud {className : Name of the model}
                             {--f|field= : Table column for this model}
                             {--m|migrate : Migrate immediately after creating CRUD}
-                            {--noview : No create view of model (Under Development)}';
+                            {--noview : No create view of model}';
 
     /**
      * The console command description.
