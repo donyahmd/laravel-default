@@ -6,14 +6,16 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 trait CrudGenerator
 {
-    protected function createCrud($className, $field = null)
+    protected function createCrud($className, $field = null, $createNoView = false)
     {
         $this->makeController($className);
         $this->makeModel($className);
         $this->makeRequest($className);
         $this->makeRoute($className);
         $this->makeMigration($className, $field);
-        $this->makeView($className, $field);
+        if ($createNoView == false) {
+            $this->makeView($className, $field);
+        }
     }
 
     private function getStub($type)
