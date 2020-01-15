@@ -2,7 +2,10 @@
 
 @section('title', '{modelNameSpacing}')
 @section('description', '{modelNameSpacing} Module')
-@section('breadcrumb', '{modelNameSpacing}')
+
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('value') }}
+@endsection
 
 @push('style')
 <!-- DataTables -->
