@@ -32,12 +32,16 @@ trait CrudGenerator
             [
                 '{modelName}',
                 '{modelNamePluralLowerCase}',
-                '{modelNameSingularLowerCase}'
+                '{modelNameSingularLowerCase}',
+                '{viewName}',
+                '{routeName}'
             ],
             [
                 $className,
                 Str::lower(Str::plural($className)),
-                Str::lower($className)
+                Str::lower($className),
+                Str::plural(Str::lower(Str::snake($className))),
+                Str::lower(Str::snake($className))
             ],
             $this->getStub('Controller')
         );
@@ -54,7 +58,7 @@ trait CrudGenerator
             ],
             [
                 $className,
-                Str::lower(Str::plural($className)),
+                Str::plural(Str::lower(Str::snake($className))),
             ],
             $this->getStub('Model')
         );

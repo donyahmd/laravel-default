@@ -2,17 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{modelName}Request;
+use DataTables;
 
 use App\Models\{modelName};
+use App\Http\Requests\{modelName}Request;
 
 class {modelName}Controller extends Controller
 {
     public function index()
     {
-        ${modelNamePluralLowerCase} = {modelName}::latest()->get();
+        return view('{viewName}.index');
+    }
 
-        return response()->json(${modelNamePluralLowerCase});
+    public function dataTables()
+    {
+        if (request()->ajax()) {
+            ${modelNamePluralLowerCase} = {modelName}::latest()->get();
+            return DataTables::of(${modelNamePluralLowerCase})->addColumn('action',
+            '<a href="{{ route("{routeName}.edit", [$id]) }}" type="button" class="btn btn-action btn-xs btn-primary" style="margin-bottom:5px;">
+                <i class="glyphicon glyphicon-edit"></i> Edit
+            </a>
+            <br>
+            <a href="{{ route("{routeName}.delete", [$id]) }}" type="button" class="btn btn-action btn-xs btn-danger">
+                <i class="glyphicon glyphicon-trash"></i> Delete
+            </a>'
+            )->escapeColumns([])->make(true);
+        } else {
+            return response('Forbidden', 403);
+        }
+    }
+
+    public function create()
+    {
+        return view('{viewName}.create');
     }
 
     public function store({modelName}Request $request)
