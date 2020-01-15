@@ -174,8 +174,8 @@ trait CrudGenerator
             case 'str':
                 return 'string';
                 break;
-            case 'txt':
-                return 'txt';
+            case 'text':
+                return 'text';
                 break;
             case 'char':
                 return 'char';
