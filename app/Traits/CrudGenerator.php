@@ -219,10 +219,10 @@ trait CrudGenerator
         }
 
         $ajaxId = "{ data: 'id', name: 'id' }," . PHP_EOL;
-        $ajaxAction = "{ data: 'action', name: 'action' }," . PHP_EOL;
+        $ajaxAction = "\t\t\t{ data: 'action', name: 'action' },";
 
         $dataTableId = "<th>ID</th>" . PHP_EOL;
-        $dataTableAction = "<th>Action</th>" . PHP_EOL;
+        $dataTableAction = "\t\t\t\t\t\t\t\t<th>Action</th>";
 
         $modelNamePluralLowerCase = Str::plural(Str::lower(Str::snake($className)));
         $modelNameSpacing = preg_replace('/([a-z])([A-Z])/s','$1 $2', $className);
