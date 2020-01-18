@@ -206,6 +206,7 @@ trait CrudGenerator
             mkdir($path, 0777, true);
 
         $this->makeIndexView($className, $explodeField);
+        $this->appendBreadcrumb($className);
     }
 
     private function makeIndexView($className, $explodeField = null)
@@ -260,15 +261,18 @@ trait CrudGenerator
         file_put_contents(base_path("/resources/views/{$modelNamePluralLowerCase}/index.blade.php"), $indexViewTemplate);
     }
 
-    private function appendBreadcrumb($className, $explodeField = null)
+    private function appendBreadcrumb($className)
     {
-        $breadcrumb_file = base_path('routes/breadcrumbs.php');
+        $breadcrumb_routes = base_path('routes/breadcrumbs.php');
+        $className = Str::ucfirst($className);
+        $classNameSnakeLowerCase = Str::lower(Str::snake($className));
 
-        $breadcrumbs = "//Home > Berita
-        Breadcrumbs::for('berita.index', function (".'$trail'.") {
-             ".'$trail->parent'."('home');
-             ".'$trail->push'."('Berita', action('BeritaController@index'));
-        });";
-        File::append();
+        $breadcrumbs = "//Home > $className
+Breadcrumbs::for('$classNameSnakeLowerCase.index', function (".'$trail'.") {
+\t".'$trail->parent'."('home');
+\t".'$trail->push'."('$className', action('".$className."Controller@index'));
+});";
+
+        File::append($breadcrumb_routes, PHP_EOL . $breadcrumbs . PHP_EOL);
     }
 }

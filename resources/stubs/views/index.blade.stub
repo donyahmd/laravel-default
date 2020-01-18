@@ -4,7 +4,7 @@
 @section('description', '{modelNameSpacing} Module')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('value') }}
+    {{ Breadcrumbs::render('{modelNameLowerCase}.index') }}
 @endsection
 
 @push('style')
