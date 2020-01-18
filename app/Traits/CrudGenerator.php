@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 trait CrudGenerator
 {
     protected function createCrud($className, $field = null, $createNoView = false)
@@ -256,5 +258,17 @@ trait CrudGenerator
         );
 
         file_put_contents(base_path("/resources/views/{$modelNamePluralLowerCase}/index.blade.php"), $indexViewTemplate);
+    }
+
+    private function appendBreadcrumb($className, $explodeField = null)
+    {
+        $breadcrumb_file = base_path('routes/breadcrumbs.php');
+
+        $breadcrumbs = "//Home > Berita
+        Breadcrumbs::for('berita.index', function (".'$trail'.") {
+             ".'$trail->parent'."('home');
+             ".'$trail->push'."('Berita', action('BeritaController@index'));
+        });";
+        File::append();
     }
 }
