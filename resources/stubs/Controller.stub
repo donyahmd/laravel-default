@@ -44,6 +44,13 @@ class {modelName}Controller extends Controller
         return response()->json(${modelNameSingularLowerCase}, 201);
     }
 
+    public function edit($id)
+    {
+        ${modelNameSingularLowerCase} = {modelName}::findOrFail($id);
+
+        return response()->json(${modelNameSingularLowerCase});
+    }
+
     public function show($id)
     {
         ${modelNameSingularLowerCase} = {modelName}::findOrFail($id);

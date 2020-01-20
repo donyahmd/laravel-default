@@ -4,8 +4,12 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 trait CrudGenerator
 {
+    private $classNameSnakeLowerCase;
+
     protected function createCrud($className, $field = null, $createNoView = false)
     {
         $this->makeController($className);
@@ -76,7 +80,7 @@ trait CrudGenerator
             $this->getStub('Request')
         );
 
-        if(!file_exists($path = app_path('/Http/Requests')))
+        if (!file_exists($path = app_path('/Http/Requests')))
             mkdir($path, 0777, true);
 
         file_put_contents(app_path("/Http/Requests/{$className}Request.php"), $requestTemplate);
@@ -93,15 +97,15 @@ trait CrudGenerator
             }
         }
 
-        $nextLine = "Route::name('" . Str::lower(Str::snake($className)) . ".')->prefix('". Str::lower(Str::snake($className)) ."')->group( function () {". PHP_EOL .
-            "\t\t" .'Route::get(\'' . "', '{$className}Controller@index')->name('index');" . PHP_EOL .
-            "\t\t" .'Route::get(\'datatables' . "', '{$className}Controller@dataTables')->name('datatables');" . PHP_EOL .
-            "\t\t" .'Route::get(\'create' . "', '{$className}Controller@create')->name('create');" . PHP_EOL .
-            "\t\t" .'Route::get(\'store' . "', '{$className}Controller@store')->name('store');" . PHP_EOL .
-            "\t\t" .'Route::get(\'edit/{id}' . "', '{$className}Controller@edit')->name('edit');" . PHP_EOL .
-            "\t\t" .'Route::get(\'update/{id}' . "', '{$className}Controller@update')->name('update');" . PHP_EOL .
-            "\t\t" .'Route::get(\'delete/{id}' . "', '{$className}Controller@delete')->name('delete');" . PHP_EOL .
-            "\t ". "});";
+        $nextLine = "Route::name('" . Str::lower(Str::snake($className)) . ".')->prefix('" . Str::lower(Str::snake($className)) . "')->group( function () {" . PHP_EOL .
+            "\t\t" . 'Route::get(\'' . "', '{$className}Controller@index')->name('index');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'datatables' . "', '{$className}Controller@dataTables')->name('datatables');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'create' . "', '{$className}Controller@create')->name('create');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'store' . "', '{$className}Controller@store')->name('store');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'edit/{id}' . "', '{$className}Controller@edit')->name('edit');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'update/{id}' . "', '{$className}Controller@update')->name('update');" . PHP_EOL .
+            "\t\t" . 'Route::get(\'delete/{id}' . "', '{$className}Controller@delete')->name('delete');" . PHP_EOL .
+            "\t " . "});";
 
         $newLine = $previousLine . "\t" . $nextLine . PHP_EOL;
         $newRoutes = str_replace(strip_tags($previousLine), strip_tags($newLine), file_get_contents($routes));
@@ -135,7 +139,7 @@ trait CrudGenerator
             $this->getStub('Migration')
         );
 
-        if(!file_exists($path = base_path('/database/migrations')))
+        if (!file_exists($path = base_path('/database/migrations')))
             mkdir($path, 0777, true);
 
         $timestamp = Str::snake(Carbon::now()->format('Y_m_d_His'));
@@ -158,18 +162,19 @@ trait CrudGenerator
             $type   = $this->typeDataColumn($value[1]);
 
             if (isset($value[2])) {
-                $length = ', '.$value[2];
+                $length = ', ' . $value[2];
             } else {
                 $length = '';
             }
 
-            $migrationColumn .= "\t\t\t".'$table->'.$type."('". $field ."'".$length. ");" . PHP_EOL;
+            $migrationColumn .= "\t\t\t" . '$table->' . $type . "('" . $field . "'" . $length . ");" . PHP_EOL;
         }
 
         return $migrationColumn;
     }
 
-    private function typeDataColumn($string) {
+    private function typeDataColumn($string)
+    {
         switch ($string) {
             case 'int':
                 return 'integer';
@@ -200,10 +205,11 @@ trait CrudGenerator
         $modelNamePluralLowerCase = Str::plural(Str::lower(Str::snake($className)));
         $path = base_path('/resources/views/' . $modelNamePluralLowerCase);
 
-        if(!file_exists($path))
+        if (!file_exists($path))
             mkdir($path, 0777, true);
 
         $this->makeIndexView($className, $explodeField);
+        $this->appendBreadcrumb($className);
     }
 
     private function makeIndexView($className, $explodeField = null)
@@ -214,10 +220,10 @@ trait CrudGenerator
         if ($explodeField != null) {
             foreach ($explodeField as $value) {
                 $column  = $value[0];
-                $ajaxColumns .= "\t\t\t{ data: '$column', name: '$column' }," . PHP_EOL ;
+                $ajaxColumns .= "\t\t\t{ data: '$column', name: '$column' }," . PHP_EOL;
 
                 $dataTableColumnName = Str::ucfirst(str_replace("_", " ", $column));
-                $dataTableColumns .= "\t\t\t\t\t\t\t\t<th>$dataTableColumnName</th>" . PHP_EOL ;
+                $dataTableColumns .= "\t\t\t\t\t\t\t\t<th>$dataTableColumnName</th>" . PHP_EOL;
             }
         } else {
             $ajaxColumns = "\t\t\t";
@@ -231,7 +237,7 @@ trait CrudGenerator
         $dataTableAction = "\t\t\t\t\t\t\t\t<th>Action</th>";
 
         $modelNamePluralLowerCase = Str::plural(Str::lower(Str::snake($className)));
-        $modelNameSpacing = preg_replace('/([a-z])([A-Z])/s','$1 $2', $className);
+        $modelNameSpacing = preg_replace('/([a-z])([A-Z])/s', '$1 $2', $className);
         $modelNameLowerCase = Str::lower(Str::snake($className));
 
         $ajaxTableColumns = $ajaxId . $ajaxColumns . $ajaxAction;
@@ -256,5 +262,42 @@ trait CrudGenerator
         );
 
         file_put_contents(base_path("/resources/views/{$modelNamePluralLowerCase}/index.blade.php"), $indexViewTemplate);
+    }
+
+    private function appendBreadcrumb($className)
+    {
+        $breadcrumb_routes = base_path('routes/breadcrumbs.php');
+
+        $breadcrumbs = $this->breadcrumbRoutes($className);
+
+        File::append($breadcrumb_routes, PHP_EOL . $breadcrumbs . PHP_EOL);
+    }
+
+    private function breadcrumbRoutes($className)
+    {
+        $className = Str::ucfirst($className);
+        $classNameSnakeLowerCase = Str::lower(Str::snake($className));
+
+        $breadcrumbHome = "//Home > $className
+Breadcrumbs::for('$classNameSnakeLowerCase.index', function (" . '$trail' . ") {
+\t" . '$trail->parent' . "('home');
+\t" . '$trail->push' . "('$className', action('" . $className . "Controller@index'));
+});" . PHP_EOL;
+
+        $breadcrumbCreate = "//Home > $className > Create
+Breadcrumbs::for('$classNameSnakeLowerCase.create', function (" . '$trail' . ") {
+\t" . '$trail->parent' . "('$classNameSnakeLowerCase.index');
+\t" . '$trail->push' . "('New $className', action('" . $className . "Controller@create'));
+});" . PHP_EOL;
+
+        $breadcrumbEdit = "//Home > $className > Edit
+Breadcrumbs::for('$classNameSnakeLowerCase.edit', function (" . '$trail' . ") {
+\t" . '$trail->parent' . "('$classNameSnakeLowerCase.index');
+\t" . '$trail->push' . "('$className edit', action('" . $className . "Controller@edit'));
+});";
+
+        $breadcrumbs = $breadcrumbHome . PHP_EOL . $breadcrumbCreate . PHP_EOL . $breadcrumbEdit;
+
+        return $breadcrumbs;
     }
 }
